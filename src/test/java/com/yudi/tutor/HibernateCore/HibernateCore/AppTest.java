@@ -1,10 +1,13 @@
 package com.yudi.tutor.HibernateCore.HibernateCore;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.yudi.tutor.HibernateCore.common.Stock;
+import com.yudi.tutor.HibernateCore.common.StockDetail;
 import com.yudi.tutor.HibernateCore.persistence.HibernateUtil;
 
 
@@ -23,16 +26,36 @@ public class AppTest{
 	
 	@Before
 	public void init() {
-		System.out.println("Maven + Hibernate + MySQL");
+		System.out.println("Maven + Hibernate 4 + MySQL");
 		session = HibernateUtil.getSessionFactory().openSession();
 	}
 	
-	@Test
+	@Test	
+	public void testInsertOneToOne(){
+		session.beginTransaction();
+		Stock stock = new Stock();
+		stock.setStockCode("K29");
+		stock.setStockName("YudiWiran2");		
+		
+		StockDetail stockDetail = new StockDetail();				
+		stockDetail.setCompDesc("Tes Desc");
+		stockDetail.setCompName("Praweda");
+		stockDetail.setRemark("Y");
+		stockDetail.setListedDate(new Date());
+		
+		stockDetail.setStock(stock);
+		stock.setStockDetail(stockDetail);
+		
+		session.save(stock);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
 	public void testInsert(){
 		session.beginTransaction();
 		Stock stock = new Stock();
-		stock.setStockCode("K21");
-		stock.setStockName("Yudi");		
+		stock.setStockCode("K26");
+		stock.setStockName("YudiWiran");		
 		
 		session.save(stock);
 		session.getTransaction().commit();
