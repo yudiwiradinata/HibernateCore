@@ -14,5 +14,6 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="com.yudi.tutor.HibernateCore.common.Stock"></mapping>
         <mapping class="com.yudi.tutor.HibernateCore.common.StockDetail"></mapping>
+        <mapping class="com.yudi.tutor.HibernateCore.common.StockDailyRecord"></mapping>
     </session-factory>
 </hibernate-configuration>

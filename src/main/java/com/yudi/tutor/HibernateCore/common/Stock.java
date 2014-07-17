@@ -1,6 +1,10 @@
 package com.yudi.tutor.HibernateCore.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,46 +13,62 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 @Entity
-@Table(name="stock")
-public class Stock implements Serializable{
+@Table(name = "STOCK")
+public class Stock implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "STOCK_ID", unique = true, nullable = false, precision = 11, scale = 0)
 	private Integer stockId;
+
+	@Column(name = "STOCK_CODE", length = 10, nullable = false)
 	private String stockCode;
+
+	@Column(name = "STOCK_NAME", length = 10, nullable = false)
 	private String stockName;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "stock", cascade = CascadeType.ALL)
 	private StockDetail stockDetail;
-	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stock", cascade = CascadeType.ALL)
+	private List<StockDailyRecord> stockDailyRecord = new ArrayList<StockDailyRecord>();
+
 	public Stock() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stock(Integer stockId, String stockCode, String stockName) {		
+	public Stock(Integer stockId, String stockCode, String stockName) {
 		this.stockId = stockId;
 		this.stockCode = stockCode;
 		this.stockName = stockName;
 	}
-	
-	public Stock(Integer stockId, String stockCode, String stockName, StockDetail stockDetail) {		
+
+	public Stock(Integer stockId, String stockCode, String stockName,
+			StockDetail stockDetail) {
 		this.stockId = stockId;
 		this.stockCode = stockCode;
 		this.stockName = stockName;
 		this.stockDetail = stockDetail;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="STOCK_ID", unique=true, nullable=false, precision=11, scale=0)
+	public List<StockDailyRecord> getStockDailyRecord() {
+		return stockDailyRecord;
+	}
+
+	public void setStockDailyRecord(List<StockDailyRecord> stockDailyRecord) {
+		this.stockDailyRecord = stockDailyRecord;
+	}
+
 	public Integer getStockId() {
 		return stockId;
 	}
@@ -57,7 +77,6 @@ public class Stock implements Serializable{
 		this.stockId = stockId;
 	}
 
-	@Column(name="STOCK_CODE", length=10, nullable=false)
 	public String getStockCode() {
 		return stockCode;
 	}
@@ -66,7 +85,6 @@ public class Stock implements Serializable{
 		this.stockCode = stockCode;
 	}
 
-	@Column(name="STOCK_NAME", length=10, nullable=false)
 	public String getStockName() {
 		return stockName;
 	}
@@ -74,17 +92,13 @@ public class Stock implements Serializable{
 	public void setStockName(String stockName) {
 		this.stockName = stockName;
 	}
-	
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="stock", cascade = CascadeType.ALL)
+
 	public StockDetail getStockDetail() {
 		return stockDetail;
 	}
-	
+
 	public void setStockDetail(StockDetail stockDetail) {
 		this.stockDetail = stockDetail;
 	}
-	
-	
-	
 
 }

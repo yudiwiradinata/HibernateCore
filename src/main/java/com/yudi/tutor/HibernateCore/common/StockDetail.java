@@ -26,19 +26,35 @@ public class StockDetail implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@GeneratedValue(generator = "generator")
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "stock"))
+	@Id
+	@Column(name = "STOCK_ID", unique = true, nullable = false)
 	private Integer stockId;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
 	private Stock stock;
+
+	@Column(name = "COMP_NAME", length = 100)
 	private String compName;
+
+	@Column(name = "COMP_DESC", length = 100)
 	private String compDesc;
+
+	@Column(name = "REMARK", length = 100)
 	private String remark;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "LISTED_DATE", length = 10)
 	private Date listedDate;
 
 	public StockDetail() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public StockDetail(Stock stock, String compName,
-			String compDesc, String remark, Date listedDate) {		
+	public StockDetail(Stock stock, String compName, String compDesc,
+			String remark, Date listedDate) {
 		this.stock = stock;
 		this.compName = compName;
 		this.compDesc = compDesc;
@@ -46,11 +62,6 @@ public class StockDetail implements Serializable {
 		this.listedDate = listedDate;
 	}
 
-	@GeneratedValue(generator = "generator")
-	@GenericGenerator(name = "generator", strategy = "foreign",
-	parameters = @Parameter(name = "property", value = "stock"))
-	@Id	
-	@Column(name="STOCK_ID", unique=true, nullable=false)
 	public Integer getStockId() {
 		return this.stockId;
 	}
@@ -59,8 +70,6 @@ public class StockDetail implements Serializable {
 		this.stockId = stockId;
 	}
 
-	@OneToOne(fetch= FetchType.LAZY)
-	@PrimaryKeyJoinColumn
 	public Stock getStock() {
 		return stock;
 	}
@@ -69,7 +78,6 @@ public class StockDetail implements Serializable {
 		this.stock = stock;
 	}
 
-	@Column(name="COMP_NAME" ,length = 100)
 	public String getCompName() {
 		return compName;
 	}
@@ -78,7 +86,6 @@ public class StockDetail implements Serializable {
 		this.compName = compName;
 	}
 
-	@Column(name="COMP_DESC",length = 100)
 	public String getCompDesc() {
 		return compDesc;
 	}
@@ -87,7 +94,6 @@ public class StockDetail implements Serializable {
 		this.compDesc = compDesc;
 	}
 
-	@Column(name="REMARK", length = 100)
 	public String getRemark() {
 		return remark;
 	}
@@ -96,8 +102,6 @@ public class StockDetail implements Serializable {
 		this.remark = remark;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LISTED_DATE", length=10)
 	public Date getListedDate() {
 		return listedDate;
 	}
