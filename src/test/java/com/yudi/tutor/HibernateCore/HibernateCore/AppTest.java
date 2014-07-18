@@ -2,12 +2,18 @@ package com.yudi.tutor.HibernateCore.HibernateCore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+import com.yudi.tutor.HibernateCore.common.Category;
 import com.yudi.tutor.HibernateCore.common.Stock;
 import com.yudi.tutor.HibernateCore.common.StockDailyRecord;
 import com.yudi.tutor.HibernateCore.common.StockDetail;
@@ -33,6 +39,50 @@ public class AppTest {
 	}
 
 	@Test
+	public void testManyToMany(){
+		session.beginTransaction();
+		
+		Stock stock = new Stock();
+		stock.setStockCode("K34");
+		stock.setStockName("YudiWiran4");		
+		
+		Stock stock2 = new Stock();
+		stock2.setStockCode("2K34");
+		stock2.setStockName("2YudiWira");		
+		
+		Stock stock3 = new Stock();
+		stock3.setStockCode("3 - K34");
+		stock3.setStockName("3 - YudiWiran4");		
+		
+		Category category1 = new Category();
+		category1.setName("CATGORY 1");
+		category1.setDesc("CATGORY 1 DESC");
+		
+		Category category2 = new Category();
+		category2.setName("CATGORY 2");
+		category2.setDesc("CATGORY 2 DESC");
+		
+		Category category3 = new Category();
+		category3.setName("CATGORY 3");
+		category3.setDesc("CATGORY 3 DESC");
+		
+		List<Category> categories = new ArrayList<Category>();
+		categories.add(category1);
+		categories.add(category2);
+		
+		/*Set<Stock> stocks = new HashSet<Stock>();
+		stocks.add(stock3);*/
+		
+		stock2.setCategories(categories);
+	//	category3.setStocks(stocks);
+		
+		session.save(stock2);
+		
+		session.getTransaction().commit();
+		
+		
+	}
+	
 	public void testInsertOneToMany() throws ParseException {
 		session.beginTransaction();
 		Stock stock = new Stock();

@@ -13,6 +13,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,6 +45,12 @@ public class Stock implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stock", cascade = CascadeType.ALL)
 	private List<StockDailyRecord> stockDailyRecord = new ArrayList<StockDailyRecord>();
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "STOCK_CATEGORY", catalog = "test", joinColumns = { 
+			@JoinColumn(name = "STOCK_ID", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) })
+	private List<Category> categories = new ArrayList<Category>();
 
 	public Stock() {
 		// TODO Auto-generated constructor stub
@@ -100,5 +109,14 @@ public class Stock implements Serializable {
 	public void setStockDetail(StockDetail stockDetail) {
 		this.stockDetail = stockDetail;
 	}
+	
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+	
+	public List<Category> getCategories() {
+		return categories;
+	}
+	
 
 }
