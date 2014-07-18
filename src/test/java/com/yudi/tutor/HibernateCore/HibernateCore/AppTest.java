@@ -48,11 +48,7 @@ public class AppTest {
 		
 		Stock stock2 = new Stock();
 		stock2.setStockCode("2K34");
-		stock2.setStockName("2YudiWira");		
-		
-		Stock stock3 = new Stock();
-		stock3.setStockCode("3 - K34");
-		stock3.setStockName("3 - YudiWiran4");		
+		stock2.setStockName("2YudiWira");				
 		
 		Category category1 = new Category();
 		category1.setName("CATGORY 1");
@@ -70,13 +66,12 @@ public class AppTest {
 		categories.add(category1);
 		categories.add(category2);
 		
-		/*Set<Stock> stocks = new HashSet<Stock>();
-		stocks.add(stock3);*/
-		
+
+		stock.setCategories(categories);
 		stock2.setCategories(categories);
-	//	category3.setStocks(stocks);
 		
 		session.save(stock2);
+		session.save(stock);
 		
 		session.getTransaction().commit();
 		
