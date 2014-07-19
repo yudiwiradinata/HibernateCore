@@ -9,13 +9,14 @@
 
 	<name>HibernateCore</name>
 	<url>http://maven.apache.org</url>
-	
+
 
 	<properties>
 		<project.version>1.0</project.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hibernate.version>4.3.4.Final</hibernate.version>		
-		<mysql.version>5.1.31</mysql.version>		
+		<hibernate.version>4.3.4.Final</hibernate.version>
+		<mysql.version>5.1.31</mysql.version>
+		<slf4j-log4j.version>1.7.7</slf4j-log4j.version>
 	</properties>
 
 
@@ -28,12 +29,26 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-
+		
+		<!-- Hibernate Connection Pool -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
 		<!-- MySQL database driver -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
+		</dependency>
+
+		<!-- slf4j-log4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-log4j.version}</version>
 		</dependency>
 
 		<dependency>

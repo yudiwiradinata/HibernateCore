@@ -20,6 +20,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "STOCK")
 public class Stock implements Serializable {
@@ -40,13 +44,18 @@ public class Stock implements Serializable {
 	@Column(name = "STOCK_NAME", length = 10, nullable = false)
 	private String stockName;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "stock", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "stock")
+	@Fetch(FetchMode.JOIN)
+	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	private StockDetail stockDetail;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stock", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stock")
+	@Fetch(FetchMode.SELECT)
+	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	private List<StockDailyRecord> stockDailyRecord = new ArrayList<StockDailyRecord>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Fetch(FetchMode.SELECT)
 	@JoinTable(name = "STOCK_CATEGORY", catalog = "test", joinColumns = { 
 			@JoinColumn(name = "STOCK_ID", nullable = false, updatable = false) }, 
 			inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) })

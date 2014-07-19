@@ -14,11 +14,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "STOCK_DETAIL")
+@DynamicInsert
+@DynamicUpdate
 public class StockDetail implements Serializable {
 
 	/**
@@ -32,7 +38,7 @@ public class StockDetail implements Serializable {
 	@Column(name = "STOCK_ID", unique = true, nullable = false)
 	private Integer stockId;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)	
 	@PrimaryKeyJoinColumn
 	private Stock stock;
 

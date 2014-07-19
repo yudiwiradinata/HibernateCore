@@ -17,6 +17,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "STOCK_DAILY_RECORD", catalog = "test", uniqueConstraints = @UniqueConstraint(columnNames = "DATE"))
 public class StockDailyRecord implements Serializable {
@@ -32,7 +35,7 @@ public class StockDailyRecord implements Serializable {
 	private Integer recordId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="STOCK_ID", nullable=false)
+	@JoinColumn(name="STOCK_ID", nullable=false)	
 	private Stock stock;
 
 	@Column(name = "PRICE_OPEN", precision = 6)
